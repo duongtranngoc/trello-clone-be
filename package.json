@@ -1,0 +1,17 @@
+{
+  "name": "trello-clone-be",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "trello clone api",
+  "main": "src/server.js",
+  "repository": "https://github.com/duongtranngoc/trello-clone-be.git",
+  "author": "duongtranngoc <duongtn0306@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
