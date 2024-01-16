@@ -3,6 +3,7 @@ import express from "express";
 import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
 import { env } from "./config/environment";
+import { APIs_V1 } from "./routes/v1";
 
 const START_SEVER = () => {
   const app = express();
@@ -10,10 +11,7 @@ const START_SEVER = () => {
   const hostname = env.APP_HOST;
   const port = env.APP_PORT;
 
-  app.get("/", async (request, response) => {
-    console.log(await GET_DB().listCollections().toArray());
-    response.end("hello world!");
-  });
+  app.use("/v1", APIs_V1);
 
   app.listen(port, hostname, () => {
     console.log(`Backend Nodejs is running at: http://${hostname}:${port}`);
