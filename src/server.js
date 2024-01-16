@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 import express from "express";
-import { CONNECT_DB, GET_DB, CLOSE_DB } from "~/config/mongodb";
+import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
+import { env } from "./config/environment";
 
 const START_SEVER = () => {
   const app = express();
 
-  const hostname = "localhost";
-  const port = 2728;
+  const hostname = env.APP_HOST;
+  const port = env.APP_PORT;
 
   app.get("/", async (request, response) => {
     console.log(await GET_DB().listCollections().toArray());
