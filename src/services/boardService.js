@@ -5,7 +5,7 @@ const createNew = async (data) => {
   try {
     const newBoard = {
       ...data,
-      slug: slugify(data.title),
+      titleSlug: slugify(data.title),
     };
 
     return newBoard;
