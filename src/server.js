@@ -7,9 +7,10 @@ import { APIs_V1 } from "./routes/v1";
 
 const START_SEVER = () => {
   const app = express();
-
   const hostname = env.APP_HOST;
   const port = env.APP_PORT;
+
+  app.use(express.json());
 
   app.use("/v1", APIs_V1);
 
