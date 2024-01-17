@@ -18,10 +18,6 @@ const createNew = async (request, response, next) => {
     await correctCondition.validateAsync(response.body, { abortEarly: false });
 
     next();
-
-    response.status(StatusCodes.CREATED).json({
-      message: "Api create new board",
-    });
   } catch (error) {
     response.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
       error: new Error(error).message,
