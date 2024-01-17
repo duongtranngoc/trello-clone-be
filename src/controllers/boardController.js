@@ -1,10 +1,11 @@
 import { StatusCodes } from "http-status-codes";
+import { boardService } from "~/services/boardService";
 
 const createNew = async (request, response, next) => {
   try {
-    response.status(StatusCodes.CREATED).json({
-      message: "Api create new board",
-    });
+    const createBoard = await boardService.createNew(request.body);
+
+    response.status(StatusCodes.CREATED).json(createBoard);
   } catch (error) {
     next(error);
   }
