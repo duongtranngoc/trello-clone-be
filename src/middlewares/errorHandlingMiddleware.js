@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import { env } from "~/config/environment";
 
 export const errorHandlingMiddleware = (error, request, response) => {
   if (!error.statusCode) {
@@ -10,6 +11,10 @@ export const errorHandlingMiddleware = (error, request, response) => {
     message: error.message || StatusCodes[error.statusCode],
     stack: error.stack,
   };
+
+  if (env.BUILD_MODE !== "development") {
+    delete responseError.stack;
+  }
 
   response.status(responseError.statusCode).json(responseError);
 };
