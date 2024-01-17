@@ -4,6 +4,7 @@ import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
 import { env } from "./config/environment";
 import { APIs_V1 } from "./routes/v1";
+import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleware";
 
 const START_SEVER = () => {
   const app = express();
@@ -13,6 +14,8 @@ const START_SEVER = () => {
   app.use(express.json());
 
   app.use("/v1", APIs_V1);
+
+  app.use(errorHandlingMiddleware);
 
   app.listen(port, hostname, () => {
     console.log(`Backend Nodejs is running at: http://${hostname}:${port}`);

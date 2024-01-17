@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { StatusCodes } from "http-status-codes";
+import ApiError from "~/utils/ApiError";
 
 const createNew = async (request, response, next) => {
   const correctCondition = Joi.object({
@@ -19,9 +20,9 @@ const createNew = async (request, response, next) => {
 
     next();
   } catch (error) {
-    response.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-      error: new Error(error).message,
-    });
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).massage)
+    );
   }
 };
 
