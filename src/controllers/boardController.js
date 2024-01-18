@@ -1,9 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import { boardService } from "~/services/boardService";
 
-const createNew = async (request, response, next) => {
+const createBoard = async (request, response, next) => {
   try {
-    const createBoard = await boardService.createNew(request.body);
+    const createBoard = await boardService.createBoard(request.body);
 
     response.status(StatusCodes.CREATED).json(createBoard);
   } catch (error) {
@@ -12,5 +12,5 @@ const createNew = async (request, response, next) => {
 };
 
 export const boardController = {
-  createNew,
+  createBoard,
 };

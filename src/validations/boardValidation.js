@@ -1,8 +1,8 @@
-import Joi from "joi";
 import { StatusCodes } from "http-status-codes";
+import Joi from "joi";
 import ApiError from "~/utils/ApiError";
 
-const createNew = async (request, response, next) => {
+const createBoard = async (request, response, next) => {
   const correctCondition = Joi.object({
     title: Joi.string().required().min(3).max(50).trim().strict().message({
       "any.required": "Title is required",
@@ -27,5 +27,5 @@ const createNew = async (request, response, next) => {
 };
 
 export const boardValidation = {
-  createNew,
+  createBoard,
 };
