@@ -11,6 +11,18 @@ const createBoard = async (request, response, next) => {
   }
 };
 
+const getDetails = async (request, response, next) => {
+  try {
+    const boardId = request.params.id;
+    const board = await boardService.getDetails(boardId);
+
+    response.status(StatusCodes.OK).json(board);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const boardController = {
   createBoard,
+  getDetails,
 };
