@@ -1,4 +1,4 @@
-const slugify = (value) => {
+export const slugify = (value) => {
   if (!value) return "";
   return String(value)
     .normalize("NFKD") // split accented characters into their base characters and diacritical marks

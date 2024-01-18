@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import express from "express";
-import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
+import express from "express";
 import { env } from "./config/environment";
-import { APIs_V1 } from "./routes/v1";
+import { CLOSE_DB, CONNECT_DB } from "./config/mongodb";
 import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleware";
+import { APIs_V1 } from "./routes/v1";
 
 const START_SEVER = () => {
   const app = express();
