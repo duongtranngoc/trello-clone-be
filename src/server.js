@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import exitHook from "async-exit-hook";
+import cors from "cors";
 import express from "express";
+
+import { corsOptions } from "./config/cors";
 import { env } from "./config/environment";
 import { CLOSE_DB, CONNECT_DB } from "./config/mongodb";
 import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleware";
@@ -10,6 +13,8 @@ const START_SEVER = () => {
   const app = express();
   const hostname = env.APP_HOST;
   const port = env.APP_PORT;
+
+  app.use(cors(corsOptions));
 
   app.use(express.json());
 
