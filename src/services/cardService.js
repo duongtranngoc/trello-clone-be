@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-catch */
 import { cardModel } from "~/models/cardModel";
+import { columnModel } from "~/models/columnModel";
 
 const createCard = async (data) => {
   try {
@@ -9,6 +10,12 @@ const createCard = async (data) => {
 
     const createdCard = await cardModel.createCard(newCard);
     const getNewCard = await cardModel.findOneById(createdCard.insertedId);
+
+    if (getNewCard) {
+      getNewCard.cards = [];
+
+      await columnModel.pushCardOrderIds(getNewCard);
+    }
 
     return getNewCard;
   } catch (error) {

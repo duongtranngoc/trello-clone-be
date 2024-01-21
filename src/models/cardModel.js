@@ -32,9 +32,15 @@ const createCard = async (data) => {
   try {
     const validData = await validateBeforceCreate(data);
 
+    const newCardToAdd = {
+      ...validData,
+      boardId: new ObjectId(validData.boardId),
+      columnId: new ObjectId(validData.columnId),
+    };
+
     const createdCard = await GET_DB()
       .collection(CARD_COLLECTION_NAME)
-      .insertOne(validData);
+      .insertOne(newCardToAdd);
 
     return createdCard;
   } catch (error) {
