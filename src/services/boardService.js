@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { boardModel } from "~/models/boardModel";
 import ApiError from "~/utils/ApiError";
 import { slugify } from "~/utils/formatters";
+import { cloneDeep } from "lodash";
 
 const createBoard = async (data) => {
   try {
@@ -27,7 +28,17 @@ const getDetails = async (boardId) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Board not found!");
     }
 
-    return board;
+    const responseBoard = cloneDeep(board);
+    responseBoard.columns.forEach((column) => {
+      column.cards = responseBoard.cards.filter(
+        // (card) => card.columnId.toString() === column._id.toString()
+        (card) => card.columnId.equals(column._id)
+      );
+    });
+
+    delete responseBoard.cards;
+
+    return responseBoard;
   } catch (error) {
     throw error;
   }
