@@ -21,6 +21,7 @@ const BOARD_COLLECTION_SCHEMA = Joi.object({
   updatedAt: Joi.date().timestamp("javascript").default(null),
   isDeleted: Joi.boolean().default(false),
 });
+const INVALID_UPDATE_FIELDS = ["_id", "createdAt"];
 
 const validateBeforceCreate = async (data) => {
   return await BOARD_COLLECTION_SCHEMA.validateAsync(data, {
@@ -110,7 +111,38 @@ const pushColumnOrderIds = async (column) => {
         }
       );
 
-    return result.value;
+    return result;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const updateBoard = async (boardId, updateData) => {
+  try {
+    Object.keys(updateData).forEach((fieldName) => {
+      if (INVALID_UPDATE_FIELDS.includes(fieldName)) {
+        delete updateData[fieldName];
+      }
+    });
+
+    const result = await GET_DB()
+      .collection(BOARD_COLLECTION_NAME)
+      .findOneAndUpdate(
+        {
+          _id: new ObjectId(boardId),
+        },
+        {
+          $set: {
+            updatedAt: updateData.updatedAt,
+            columnOrderIds: updateData.columnOrderIds,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+
+    return result;
   } catch (error) {
     throw new Error(error);
   }
@@ -123,4 +155,5 @@ export const boardModel = {
   findOneById,
   getDetails,
   pushColumnOrderIds,
+  updateBoard,
 };
