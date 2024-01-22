@@ -132,10 +132,7 @@ const updateBoard = async (boardId, updateData) => {
           _id: new ObjectId(boardId),
         },
         {
-          $set: {
-            updatedAt: updateData.updatedAt,
-            columnOrderIds: updateData.columnOrderIds,
-          },
+          $set: updateData,
         },
         {
           returnDocument: "after",
