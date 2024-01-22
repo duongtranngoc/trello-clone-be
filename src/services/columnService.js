@@ -25,6 +25,22 @@ const createColumn = async (data) => {
   }
 };
 
+const updateColumn = async (columnId, requestBody) => {
+  try {
+    const updateData = {
+      ...requestBody,
+      updatedAt: Date.now(),
+    };
+
+    const updatedColumn = await columnModel.updateColumn(columnId, updateData);
+
+    return updatedColumn;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const columnService = {
   createColumn,
+  updateColumn,
 };
