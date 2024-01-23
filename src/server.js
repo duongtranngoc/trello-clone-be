@@ -22,9 +22,15 @@ const START_SEVER = () => {
 
   app.use(errorHandlingMiddleware);
 
-  app.listen(port, hostname, () => {
-    console.log(`Backend Nodejs is running at: http://${hostname}:${port}`);
-  });
+  if (env.BUILD_MODE === "production") {
+    app.listen(process.env.PORT, () => {
+      console.log(`Backend Nodejs is running at: ${process.env.PORT}`);
+    });
+  } else {
+    app.listen(port, hostname, () => {
+      console.log(`Backend Nodejs is running at: http://${hostname}:${port}`);
+    });
+  }
 
   exitHook(() => {
     CLOSE_DB();
