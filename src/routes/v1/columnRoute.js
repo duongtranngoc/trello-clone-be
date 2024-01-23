@@ -9,9 +9,8 @@ Router.route("/").post(
   columnController.createColumn
 );
 
-Router.route("/:id").put(
-  columnValidation.updateColumn,
-  columnController.updateColumn
-);
+Router.route("/:id")
+  .put(columnValidation.updateColumn, columnController.updateColumn)
+  .delete(columnValidation.deleteColumn, columnController.deleteColumn);
 
 export const columnRoute = Router;

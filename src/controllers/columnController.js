@@ -25,7 +25,19 @@ const updateColumn = async (request, response, next) => {
   }
 };
 
+const deleteColumn = async (request, response, next) => {
+  try {
+    const columnId = request.params.id;
+    const result = await columnService.deleteColumn(columnId);
+
+    response.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const columnController = {
   createColumn,
   updateColumn,
+  deleteColumn,
 };
