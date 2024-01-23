@@ -4,6 +4,8 @@ import { boardModel } from "~/models/boardModel";
 import ApiError from "~/utils/ApiError";
 import { slugify } from "~/utils/formatters";
 import { cloneDeep } from "lodash";
+import { columnModel } from "~/models/columnModel";
+import { cardModel } from "~/models/cardModel";
 
 const createBoard = async (data) => {
   try {
@@ -59,8 +61,32 @@ const updateBoard = async (boardId, requestBody) => {
   }
 };
 
+const moveCardToDifferentColumn = async (requestBody) => {
+  try {
+    await columnModel.updateColumn(requestBody.prevColumnId, {
+      cardOrderIds: requestBody.prevCardOrderIds,
+      updatedAt: Date.now(),
+    });
+
+    await columnModel.updateColumn(requestBody.nextColumnId, {
+      cardOrderIds: requestBody.nextCardOrderIds,
+      updatedAt: Date.now(),
+    });
+
+    await cardModel.updateCard(requestBody.currentCardId, {
+      columnId: requestBody.nextColumnId,
+      updatedAt: Date.now(),
+    });
+
+    return { updateResult: "Successfully!" };
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const boardService = {
   createBoard,
   getDetails,
   updateBoard,
+  moveCardToDifferentColumn,
 };
