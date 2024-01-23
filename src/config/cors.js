@@ -6,7 +6,7 @@ import { WHITELIST_DOMAINS } from "~/utils/constants";
 
 export const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin && env.BUILD_MODE === "development") {
+    if (env.BUILD_MODE === "development") {
       return callback(null, true);
     }
 
